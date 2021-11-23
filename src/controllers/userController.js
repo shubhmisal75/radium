@@ -1,15 +1,15 @@
 const userModel = require('../models/userModel')
-const jwt = require('jsonwebtoken')
+//const jwt = require('jsonwebtoken')
 
 const createUser = async function (req, res) {
     let userDetails = req.body
-    // let appType = req.headers['isfreeapp']
-    // let userType
-    // if(appType === 'false') {
-    //     userType = false
-    // } else {
-    //     userType = true
-    // }
+     let appType = req.headers['isfreeapp']
+     let userType
+     if(appType === 'false') {
+         userType = false
+     } else {
+       userType = true
+     }
     
     userDetails.freeAppUser = req.isFreeAppUser//this attribute was set in req in the appMiddleware
     let userCreated = await userModel.create(userDetails)
@@ -24,7 +24,7 @@ const login = async function (req, res) {
 
     let user = await userModel.findOne({name: userName, password: userPassword, isDeleted: false})
     if(user) {
-        const generatedToken = jwt.sign({userId: user._id}, "radium")
+     //   const generatedToken = jwt.sign({userId: user._id}, "radium")
         res.send({status: true, data: user._id, token: generatedToken})
     } else {
         res.send({status: false, message: 'Invalid credentials'})

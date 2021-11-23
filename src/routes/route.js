@@ -5,13 +5,15 @@ const productController = require('../controllers/productController')
 const orderController = require('../controllers/orderController')
 const appMiddleware = require('../middlewares/appMiddleware')
 
-router.post('/users', appMiddleware.validateAppType, userController.createUser);
+router.post('/users', userController.createUser);
 //For JWT session
 router.get('/users/:userId', userController.getDetails)
 //For JWT session
-router.post('/login', userController.login)
+//router.post('/login', userController.login)
 router.post('/products', productController.createProduct);
 router.post('/orders', appMiddleware.validateAppType, orderController.createOrder);
 
 
 module.exports = router;
+
+//appMiddleware.validateAppType
