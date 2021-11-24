@@ -1,18 +1,23 @@
-const validateAppType = function(req, res, next){
-    let appTypeHeader = req.headers['isfreeapp']
-    let isAppFree
-    if(!appTypeHeader) {
-        return res.send({message: 'Mandatory header missing'})
-    }
+const jwt = require('jsonwebtoken')
 
-    if(appTypeHeader === 'false') {
-        isAppFree = false
-    } else {
-        isAppFree = true
-    }
-    req.isFreeAppUser = isAppFree
 
-    next()
+
+
+
+
+const mw = function(req,res,next){
+    let token = req.headers['x-auth-token'] 
+    let validToken = jwt.verify(token, "radium")
+if(validToken){
+        req.validToken = validToken
+        next()
+    }
+    else{
+        res.send({ msg:"invalid token, please login again"})
+    }
+    
 }
 
-module.exports.validateAppType = validateAppType
+
+
+module.exports.mw = mw
