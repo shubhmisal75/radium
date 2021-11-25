@@ -11,7 +11,7 @@ router.get('/users/:userId',appMiddleware.mw, userController.getDetails)
 router.post('/login', userController.login)
 
 
-router.put('/updatemail/:userId',userController.updatemail)
+router.put('/updatemail/:userId',appMiddleware.mw,userController.updatemail)
 module.exports = router;
 
 //appMiddleware.validateAppType

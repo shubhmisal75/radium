@@ -25,8 +25,9 @@ const login = async function (req, res) {
 
 
 const getDetails = async function (req, res) {
-  
-    if(req.validToken){
+  console.log(req.validToken)
+
+    if(req.validToken.userId === req.params.userId){
         let user = await userModel.findOne({_id: req.params.userId, isDeleted : false });
         if(user){
             res.send({status:true, data: user})
@@ -35,17 +36,34 @@ const getDetails = async function (req, res) {
             res.send({status: false ,   msg:"invalid userId"})
         }
     
+    }else {
+        res.send({msg : "invalid Token"})
     }
-    else{
-        res.send({status:false, msg:"invalid tokenId"})
-    }
+    
 }
 
+/*const getDetails = async function (req, res) 
+{​​​​​​    let identity = req.params.userid 
+           if (req.decodetoken._id ==  req.params.userid) 
+     {​​​​​​      
+              let detail = await accountModel.findOne({​​​​​​ _id: identity, isdeleted: false }​​​​​​) 
+                if (detail) {​​​​​​  
+                      res.send({​​​​​​ status: true, data: detail }​​​​​​)   
+             }​​​​​​ 
+        else {​​​​​​                res.send({​​​​​​ status: false, data: "user not found" }​​​​​​)    
+            }​​​​​​        }​​​​​​
+
+}*/
 const updatemail = async function(req, res ){
     let userId =req.params.userId
     let mail = req.body.email
-    let check = await userModel.findByIdAndUpdate({_id: userId},{$set:{email:mail}})
+
+    if(req.validToken.userId == userId){
+    let check = await userModel.findByIdAndUpdate({_id: userId},{$set:{email:mail}}, {new:true})
     res.send({data:check})
+}else{
+    res.send({msg: "invalid type"})
+}
 }
 
 module.exports.updatemail= updatemail
