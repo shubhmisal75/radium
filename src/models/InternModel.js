@@ -1,42 +1,29 @@
 const mongoose = require('mongoose')
-const ObjectId = mongoose.Schema.Types.ObjectId
 
-const blogSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const InternSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: 'Name is required.'
     },
     email: {
         type: String,
         unique: true,
-        required: true,
-        validate: {
-            validator: function (v) {
-                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
-            },
-            message: "Please enter a valid email"
-
-        }
+        trim: true,
+        required: 'Email Address is required.'
     },
-    mobile:{
+    mobile: {
         type: Number,
         unique: true,
-        required: true,
-        validate: {
-            validator: function (v) {
-                return /^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/.test(v);
-            },
-            message: "Please enter a valid mobile number"
-
-    }
-},
-
-    collegeId:{
-        type:ObjectId,
-        ref : 'collegeDB'
+        trim: true,
+        required: 'Mobile Number is required.'
     },
 
-  
+    collegeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'collegeDB'
+    },
+
+
     isDeleted: {
         type: Boolean,
         default: false
@@ -44,6 +31,6 @@ const blogSchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-module.exports = mongoose.model('Blog', blogSchema)
+module.exports = mongoose.model('InternDB', InternSchema)
 
 
