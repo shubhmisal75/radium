@@ -72,7 +72,7 @@ const getInternlist = async function (req, res) {
         }
         const collegeId = CollegeDetail._id
 
-        const interests = await InternModel.find({ college: collegeId, isDeleted:false }).select({_id:1,name:1,email:1,mobile:1})
+        const interests = await InternModel.find({ collegeId: collegeId, isDeleted:false }).select({_id:1,name:1,email:1,mobile:1})
 
         const { name, fullName, logoLink} = CollegeDetail
 
