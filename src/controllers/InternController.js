@@ -23,6 +23,12 @@ const createIntern = async function (req, res) {
         const requestBody = req.body
         const { name, email, mobile, collegeName } = requestBody
 
+
+        if (!isValidRequestBody(requestBody)) {
+            res.status(400).send({ status: false, message: 'Invalid request parameters.' })
+            return
+        }
+
         if (!collegeName) {
             res.status(400).send({ status: false, message: ' college Name is required' })
             return
@@ -36,10 +42,7 @@ const createIntern = async function (req, res) {
 
         const collegeId = getCollegeDetail._id
 
-        if (!isValidRequestBody(requestBody)) {
-            res.status(400).send({ status: false, message: 'Invalid request parameters.' })
-            return
-        }
+      
 
         if (!isValid(name)) {
             res.status(400).send({ status: false, message: ' name is required' })
