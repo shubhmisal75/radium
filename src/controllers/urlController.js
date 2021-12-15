@@ -6,7 +6,6 @@ const validUrl = require('valid-url')
 
 const shortid = require('shortid')
 
-//package for redis 
 const redis = require("redis");
 
 const { promisify } = require("util");
@@ -28,8 +27,6 @@ redisClient.on("connect", async function () {
 
 const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
 const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
-
-
 
 
 //------------------------------------------------functions--------------------------------------------------------//
