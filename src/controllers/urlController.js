@@ -1,12 +1,9 @@
 const mongoose = require('mongoose')
 const UrlModel = require('../models/UrlModel')
 
-//const url = require('mongoose-type-url')
-
-//package for validation of url
 const validUrl = require('valid-url')
 
-//package for url code generator
+
 const shortid = require('shortid')
 
 //package for redis 
@@ -29,11 +26,6 @@ redisClient.on("connect", async function () {
 });
 
 
-
-//1. connect to the server
-//2. use the commands :
-
-//Connection setup for redis
 
 const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
 const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
@@ -77,7 +69,6 @@ const createUrl = async function (req, res) {
             return
         }
 
-        //if valid then trim it
         const trimUrl = LongURL.trim()
 
 
@@ -86,7 +77,7 @@ const createUrl = async function (req, res) {
         }
 
         else{
-            // if valid, we create the url code
+           
             const URLCode = shortid.generate()
 
             const urlData = await GET_ASYNC(`${trimUrl}`)
@@ -116,9 +107,7 @@ const createUrl = async function (req, res) {
 
         }
 
-
-
-    } catch (error) {
+     } catch (error) {
         console.log(error)
         res.status(500).send({ status: false, msg: error.message })
     }
@@ -150,8 +139,6 @@ const getUrl = async function (req, res) {
             }
         }
 
-
-        //exception handler
     } catch (err) {
 
         res.status(500).send({ status: false, err: err.message })
