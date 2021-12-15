@@ -11,7 +11,6 @@ const redis = require("redis");
 
 const { promisify } = require("util");
 
-//Connect to redis
 const redisClient = redis.createClient(
     18002,
     "redis-18002.c232.us-east-1-2.ec2.cloud.redislabs.com",
@@ -48,7 +47,7 @@ var regex = new RegExp(expression);
 
 //-------------------------------------------------------------------------------------------------------------------//
 
-//create url 
+
 const createUrl = async function (req, res) {
     try {
         const baseUrl = 'http://localhost:3000'
@@ -114,7 +113,8 @@ const createUrl = async function (req, res) {
 }
 
 
-// Getting the url data of the long url with shortened url
+
+
 const getUrl = async function (req, res) {
     try {
 
