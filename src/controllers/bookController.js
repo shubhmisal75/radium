@@ -97,12 +97,13 @@ const getParamsBook = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please Provide a valid bookId in path params" });;
         }
         let checkParams = await bookModel.findOne({ _id: paramsId, isDeleted: false }).select({ ISBN: 0 });
+        const { _id, title, excerpt, userId, category, subcategory, reviews, isDeleted, deletedAt, releasedAt, createdAt, updatedAt } = checkParams
         if (!checkParams) {
             return res.status(404).send({ status: false, msg: "There is no book exist with this id" });
         }
         const reviewData = await reviewModel.find({ bookId: paramsId, isDeleted: false }).select({ bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 }); ////////
-        const response = { checkParams, reviewData }
-        return res.status(200).send({ status: true, message: 'Books list', data: response });
+    const newData = { _id, title, excerpt, userId, category, subcategory, reviews, isDeleted, deletedAt, releasedAt, createdAt, updatedAt, reviewData }
+        return res.status(200).send({ status: true, message: 'Books list', data: newData });
     }
     catch (err) {
         return res.status(500).send({ status: false, msg: err.message });
